@@ -7,12 +7,14 @@ const routes = (): Router => {
     history: createWebHistory(),
     routes: [
       {
+        name: ROUTES.HOME.name,
         path: '/',
         component: lazyLoad(ROUTES.HOME.componentName as string),
       },
       {
-        path: '/',
-        component: lazyLoad(ROUTES.HOME.componentName as string),
+        name: ROUTES.SETTING.name,
+        path: '/setting',
+        component: lazyLoad(ROUTES.SETTING.componentName as string),
       },
       {
         path: '/:data(.*)',

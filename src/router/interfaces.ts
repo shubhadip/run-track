@@ -9,4 +9,6 @@ export interface IRoute {
 export interface IAllRoutes {
   HOME: IRoute;
   SETTING: IRoute;
+  PREVIOUSWORKOUTS: IRoute;
+  INFO: IRoute;
 }

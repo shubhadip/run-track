@@ -5,11 +5,11 @@
       <div class="btn-stop" @click="handleClick">Stop</div>
     </template>
     <template v-else>
-      <div class="btn-details">
+      <div class="btn-details" @click="handleHome">
         <IconView icon="icon-home" />
       </div>
       <div class="btn-details"><IconView icon="icon-history" :width="24" /></div>
-      <div class="btn-details"><IconView icon="icon-cog" /></div>
+      <div class="btn-details" @click="handleSetting"><IconView icon="icon-cog" /></div>
       <div class="btn-details"><IconView icon="icon-flickr" /></div>
     </template>
   </footer>
@@ -18,6 +18,8 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import IconView from '@/components/common/iconview/IconView.vue';
+import { useRouter } from 'vue-router';
+import { ROUTES } from '@/router/constants';
 
 export default defineComponent({
   name: 'appfooter',
@@ -36,6 +38,7 @@ export default defineComponent({
     },
   },
   setup(props, { emit }) {
+    const router = useRouter();
     /**
      * emit reset workout event
      */
@@ -43,8 +46,28 @@ export default defineComponent({
       emit('reset-workout');
     };
 
+    /**
+     * emit reset workout event
+     */
+    const handleSetting = (): void => {
+      router.push({
+        name: ROUTES.SETTING.name,
+      });
+    };
+
+    /**
+     * emit reset workout event
+     */
+    const handleHome = (): void => {
+      router.push({
+        name: ROUTES.HOME.name,
+      });
+    };
+
     return {
       handleClick,
+      handleHome,
+      handleSetting,
     };
   },
 });

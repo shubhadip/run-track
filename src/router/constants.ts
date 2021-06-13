@@ -2,7 +2,7 @@ import { IAllRoutes } from '@/router/interfaces';
 
 export const ROUTES: IAllRoutes = {
   HOME: {
-    path: '/home',
+    path: '/',
     name: 'home',
     componentName: 'home',
   },
@@ -10,5 +10,15 @@ export const ROUTES: IAllRoutes = {
     path: '/setting',
     name: 'setting',
     componentName: 'setting',
+  },
+  PREVIOUSWORKOUTS: {
+    path: '/prevworkouts',
+    name: 'prevworkouts',
+    componentName: 'prevworkouts',
+  },
+  INFO: {
+    path: '/info',
+    name: 'info',
+    componentName: 'info',
   },
 };
