@@ -1,18 +1,11 @@
-import { ref, Ref } from 'vue';
+import { ref } from 'vue';
+import { IUseHome } from '@/shared/interface';
 
 /**
  * utility file for Home.vue
  * @returns
  */
-export function useHome(): {
-  start: Function;
-  currentTime: Ref<number>;
-  workoutStarted: Ref<boolean>;
-  evaluateMessage: () => string;
-  workoutComplete: Ref<boolean>;
-  timer: Ref<number | null>;
-  resetWorkout: () => void;
-} {
+export function useHome(): IUseHome {
   const runningPeriods = [60];
   const speakApi = new SpeechSynthesisUtterance();
   const currentTime = ref<number>(10);
@@ -34,14 +27,6 @@ export function useHome(): {
   const alertWhenWorkoutIsAboutToEndMsg = (time: number): void => {
     speakMessage(`Workout About to Complete ${time} seconds remaning`);
   };
-
-  // const startWorkout = (): void => {
-  //   const nextValue = runningPeriods.shift();
-  //   if (nextValue) {
-  //     currentTime.value = nextValue;
-  //     startCountDown(nextValue);
-  //   }
-  // };
 
   const startCountDown = (time: number, isCountDown = false): void => {
     let value = time;
