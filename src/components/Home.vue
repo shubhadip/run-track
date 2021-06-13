@@ -28,7 +28,7 @@
 <script lang="ts">
 import { computed, defineComponent } from 'vue';
 import IconView from './iconview/IconView.vue';
-import { useHome } from './../use/useHome';
+import { useHome } from '../use/useHome';
 
 export default defineComponent({
   name: 'Home',
@@ -47,16 +47,19 @@ export default defineComponent({
       }
     };
 
-    const displayMessage = computed((): string | undefined => {
+    const displayMessage = computed((): string => {
       if (!workoutComplete.value && !workoutStarted.value) {
         return 'START RUN';
-      } else if (workoutComplete.value && workoutStarted.value) {
+      }
+      if (workoutComplete.value && workoutStarted.value) {
         return 'WORKOUT COMPLETED';
-      } else if (workoutStarted.value && !workoutComplete.value && timer.value) {
+      }
+      if (workoutStarted.value && !workoutComplete.value && timer.value) {
         const minutes = timer.value / 60;
         const secs = timer.value % 60;
         return minutes >= 1 ? `${Math.floor(minutes)} min ${secs} secs remaining` : `${secs} secs remaining`;
       }
+      return 'START RUN';
     });
 
     return {

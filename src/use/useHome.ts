@@ -1,6 +1,9 @@
-import { Ref } from '@vue/runtime-core';
-import { ref } from 'vue';
+import { ref, Ref } from 'vue';
 
+/**
+ * utility file for Home.vue
+ * @returns
+ */
 export function useHome(): {
   start: Function;
   currentTime: Ref<number>;
@@ -10,9 +13,9 @@ export function useHome(): {
   timer: Ref<number | null>;
   resetWorkout: () => void;
 } {
-  let runningPeriods = [60];
-  let speakApi = new SpeechSynthesisUtterance();
-  let currentTime = ref<number>(10);
+  const runningPeriods = [60];
+  const speakApi = new SpeechSynthesisUtterance();
+  const currentTime = ref<number>(10);
   const workoutStarted = ref<boolean>(false);
   const workoutComplete = ref<boolean>(false);
   const timer = ref<number | null>(null);
@@ -28,17 +31,17 @@ export function useHome(): {
     return runningPeriods.length <= 0 ? `Workout Complete` : `${currentTime.value} seconds Workout Complete`;
   };
 
-  const alertWhenWorkoutIsAboutToEndMsg = (time: number) => {
+  const alertWhenWorkoutIsAboutToEndMsg = (time: number): void => {
     speakMessage(`Workout About to Complete ${time} seconds remaning`);
   };
 
-  const startWorkout = (): void => {
-    const nextValue = runningPeriods.shift();
-    if (nextValue) {
-      currentTime.value = nextValue;
-      startCountDown(nextValue);
-    }
-  };
+  // const startWorkout = (): void => {
+  //   const nextValue = runningPeriods.shift();
+  //   if (nextValue) {
+  //     currentTime.value = nextValue;
+  //     startCountDown(nextValue);
+  //   }
+  // };
 
   const startCountDown = (time: number, isCountDown = false): void => {
     let value = time;
@@ -48,7 +51,7 @@ export function useHome(): {
       }
 
       timer.value = value;
-      value = value - 1;
+      value -= 1;
 
       if (
         alertWhenWorkoutIsAboutToEnd.value &&
@@ -64,7 +67,11 @@ export function useHome(): {
         speakMessage(isCountDown ? 'Workout Started' : evaluateMessage());
         clearInterval(intervalId.value);
         if (runningPeriods.length > 0) {
-          startWorkout();
+          const nextValue = runningPeriods.shift();
+          if (nextValue) {
+            currentTime.value = nextValue;
+            startCountDown(nextValue);
+          }
         } else {
           workoutComplete.value = true;
         }
@@ -72,7 +79,7 @@ export function useHome(): {
     }, 1000);
   };
 
-  const start = () => {
+  const start = (): void => {
     timer.value = currentTime.value;
     startCountDown(currentTime.value, true);
   };
