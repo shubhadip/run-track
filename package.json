@@ -9,6 +9,7 @@
   },
   "scripts": {
     "cz": "git-cz",
+    "start": "node server.js",
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "prepublishOnly": "yarn lint && yarn build",
