@@ -72,7 +72,7 @@
     "typescript": "^3.9.5"
   },
   "gitHooks": {
-    "pre-commit": ". ./scripts/pre-commit.sh && lint-staged && yarn test",
+    "pre-commit": "lint-staged && yarn test",
     "commit-msg": "commitlint -e -V"
   },
   "lint-staged": {
