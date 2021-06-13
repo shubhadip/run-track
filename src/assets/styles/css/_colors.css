@@ -1,0 +1,42 @@
+/* Color system */
+$white: #ffffff;
+
+/* Black color shades */
+$black: #000000;
+$black-1: #333333;
+$black-2: #222222;
+
+/* Brand colors */
+$blue: #00b9f5;
+$dark-blue: #07448e;
+
+/* Blue color shades */
+$blue-1: #4790fb;
+$blue-2: #5defff;
+$blue-3: #def6ff;
+
+/* Red color shades */
+$red: #fd5154;
+$red-1:  #ffefef;
+
+/* Mix colors */
+$pink: #f352a4;
+$orange: #f27447;
+$purple: #6456f1;
+
+/* Yellow color shades */
+$yellow: #ff9d00;
+$yellow-1: #ecaf15;
+$yellow-2: #ffe490;
+$yellow-3: #fff6e5;
+
+/* Green color shades */
+$green: #21c17a;
+$green-1: #20c1bc;
+$green-2: #e9f9f2;
+
+/* grey color shades */
+$grey: #747d84;
+$grey-1: #7f8386;
+$grey-2: #e8edf3;
+$grey-3: #f5f9fe;

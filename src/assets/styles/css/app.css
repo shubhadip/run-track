@@ -1,0 +1,8 @@
+@import '@css/_settings.css';
+@import '@css/paper.min.css';
+
+* {
+  box-sizing: border-box;
+  margin: 0px;
+  padding: 0px;
+}
