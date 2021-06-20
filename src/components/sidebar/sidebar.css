@@ -1,0 +1,108 @@
+@import '@css/app.css';
+.project-name {
+  padding: 0px 16px 16px 16px;
+  border-bottom: 1px solid $black-2;
+}
+.sidebar-container {
+  padding: 14px 0px;
+  height: 100vh;
+  position: fixed;
+  z-index: 100;
+  background-color: $black-1;
+  color: $white;
+  top: 0px;
+  bottom: 56px;
+  left: -260px;
+  width: 260px;
+  overflow-y: scroll;
+  transition: all 500ms linear;
+  .main-menu {
+    padding: 0px 16px;
+    ul {
+      list-style: none;
+      margin: 0;
+      text-align: left;
+      li {
+        padding: 20px;
+        position: relative;
+        border-bottom: 1px solid $black-2;
+        a {
+          padding: 15px 20px 15px 20px;
+          display: block;
+          color: $black-2;
+          text-decoration: none;
+          z-index: 4;
+          font-size: 15px;
+        }
+        .icon_up,
+        .icon_down {
+          position: absolute;
+          top: 5px;
+          font-size: 12px;
+          right: -20px;
+        }
+      }
+      li:hover {
+        /* background-color: #ddd; */
+      }
+      .menu-item {
+        span {
+          position: relative;
+        }
+      }
+      .sub-menu-1 {
+        /* background-color: $borderColor; */
+        ul {
+          .sub-menu-item {
+            a {
+              font-size: 14px;
+              padding: 15px 15px 15px 0px;
+              display: block;
+              text-decoration: none;
+              color: $black;
+              /* background-color: $borderColor; */
+            }
+          }
+        }
+      }
+    }
+  }
+  .icon_close {
+    cursor: pointer;
+    z-index: 6;
+    position: absolute;
+    right: 20px;
+    font-size: 16px;
+    color: $black-2;
+    font-weight: bold;
+    top: 20px;
+  }
+  .top-section {
+    display: flex;
+    padding: 0px 20px 10px;
+    .home--side-title {
+      margin: auto 0;
+      margin-left: 10px;
+    }
+    a {
+      text-decoration: none;
+      color: $black-2;
+    }
+    .logo {
+      width: 180px;
+      height: 50px;
+    }
+    img {
+      width: 70%;
+    }
+  }
+}
+
+.active {
+  left: 0;
+}
+
+.user-details {
+  padding: 20px;
+  border-bottom: 1px solid $black-2;
+}

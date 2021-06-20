@@ -1,8 +1,79 @@
 @import '@css/_settings.css';
+@import '@css/_mixins.css';
+@import '@css/_input-elements.css';
 @import '@css/paper.min.css';
 
 * {
   box-sizing: border-box;
   margin: 0px;
   padding: 0px;
+}
+
+hr::after {
+  content: '' !important;
+}
+ul li {
+  text-indent: 0px;
+}
+
+ul li::before {
+  content: '';
+}
+
+a {
+  text-decoration: none;
+  background-image: none;
+}
+
+.menu-icon {
+  position: relative;
+  height: 20px;
+  width: 20px;
+  display: block;
+  hr {
+    background-color: $white;
+    position: absolute;
+    height: 3px;
+    border: none;
+    width: 100%;
+    border-radius: 10px;
+    margin: 0px;
+    top: 7px;
+    transition: 0.45s;
+  }
+  &.active {
+    hr {
+      opacity: 0;
+    }
+  }
+  &:after,
+  &:before {
+    content: '';
+    transform-origin: center;
+    left: 0px;
+    height: 3px;
+    border-radius: 10px;
+    transition: 0.45s;
+    width: 100%;
+    background-color: $white;
+    position: absolute;
+  }
+  &:after {
+    top: 1px;
+  }
+  &:before {
+    bottom: 4px;
+  }
+  &.active {
+    &:before {
+      transform: rotate(45deg);
+      top: 8px;
+      left: 1px;
+    }
+    &:after {
+      transform: rotate(-45deg);
+      top: 8px;
+      left: 1px;
+    }
+  }
 }

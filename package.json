@@ -12,14 +12,21 @@
     "start": "node server.js",
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
+    "lint": "vue-cli-service lint",
     "prepublishOnly": "yarn lint && yarn build",
     "commit-message": "yarn commitlint -e -V",
     "semantic-release:local": "yarn run build && yarn build:demo && semantic-release --no-ci",
     "semantic-release": "semantic-release"
   },
   "dependencies": {
+    "@kyvg/vue3-notification": "^2.3.3",
+    "axios": "^0.21.1",
+    "click-outside-vue3": "^4.0.1",
+    "date-fns": "^2.22.1",
+    "express": "^4.17.1",
+    "js-cookie": "^2.2.1",
     "vue": "^3.0.2",
-    "express": "^4.17.1"
+    "vue-router": "^4.0.8"
   },
   "devDependencies": {
     "@babel/plugin-transform-runtime": "^7.12.1",

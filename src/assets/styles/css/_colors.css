@@ -17,7 +17,7 @@ $blue-3: #def6ff;
 
 /* Red color shades */
 $red: #fd5154;
-$red-1:  #ffefef;
+$red-1: #ffefef;
 
 /* Mix colors */
 $pink: #f352a4;
@@ -40,3 +40,5 @@ $grey: #747d84;
 $grey-1: #7f8386;
 $grey-2: #e8edf3;
 $grey-3: #f5f9fe;
+
+$borderColor: #f2f3f3;

@@ -3,7 +3,7 @@
 /* Note: 1rem = 16px */
 
 /* stylelint-disable -- custom resets involve rules that are not in the scope of the linter rules */
-@import "./_colors.css";
+@import './_colors.css';
 
 /* Note: calc() function used here is post-css calc plugin, which gives computed value directly */
 /* Applies important to utility classes defined */
@@ -39,9 +39,9 @@ $paragraph-margin-bottom: 0rem;
 Fonts
 Font, line-height, and color for body text, headings, and more.
 */
-$font-family-sans-serif: "SF Pro Text", Roboto, arial, sans-serif;
-$font-family-serif: Georgia, Cambria, "Times New Roman", Times, serif;
-$font-family-monospace: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+$font-family-sans-serif: 'SF Pro Text', Roboto, arial, sans-serif;
+$font-family-serif: Georgia, Cambria, 'Times New Roman', Times, serif;
+$font-family-monospace: SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
 $font-family-base: $font-family-sans-serif;
 
 /* Assumes the browser default, typically `16px` */
@@ -146,9 +146,9 @@ $btn-transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, bo
   box-shadow 0.15s ease-in-out;
 
 /* Radio & checkboxes */
-$checkbox-radio-size: rem(18px);
-$checkbox-radio-size-sm: rem(14px);
-$checkbox-radio-gutter: rem(12px);
+$checkbox-radio-size: 18px;
+$checkbox-radio-size-sm: 14px;
+$checkbox-radio-gutter: 12px;
 $checkbox-radio-border-color: #b8c2cb;
 $checkbox-radio-focus-shadow: 0 0 0 1px $white, $input-btn-focus-box-shadow;
 $checkbox-radio-transition: background-color 0.15s ease-in-out, border-color 0.15s ease-in-out,

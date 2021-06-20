@@ -1,0 +1,55 @@
+@import '@css/app.css';
+
+.app-spinner {
+  display: block;
+  white-space: nowrap;
+  max-width: 100px;
+
+  & > i {
+    display: inline-block;
+    padding: 6px;
+    margin: 0 3px;
+    border-radius: 100%;
+    transform: scale(0);
+    animation: scale 1.2s infinite ease-in-out alternate;
+
+    &:nth-child(1) {
+      animation-delay: 0s;
+      background: $dark-blue;
+    }
+
+    &:nth-child(2) {
+      animation-delay: 0.24s;
+      background: $dark-blue;
+    }
+
+    &:nth-child(3) {
+      animation-delay: 0.48s;
+      background: $dark-blue;
+    }
+
+    &:nth-child(4) {
+      animation-delay: 0.72s;
+      background: $blue;
+    }
+
+    &:nth-child(5) {
+      animation-delay: 0.96s;
+      background: $blue;
+    }
+  }
+}
+
+@keyframes scale {
+  0% {
+    transform: scale(0);
+  }
+
+  50% {
+    transform: scale(1);
+  }
+
+  100% {
+    transform: scale(0);
+  }
+}
