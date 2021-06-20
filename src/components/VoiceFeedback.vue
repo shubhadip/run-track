@@ -1,39 +1,64 @@
 <template>
-  <div class="container-fluid">
+  <div class="container-fluid voice-feedback">
+    <div class="voice-header">Voice Instructions</div>
     <AppCheckbox
-      id="q1"
-      label="Checkbox element label?"
-      :small="true"
-      :plain="true"
-      :items="[
-        { label: 'yes', value: 1 },
-        { label: 'no', value: 2 },
-      ]"
+      id="voice-feedback"
+      :items="feedBackOptions"
+      :plain="false"
+      :isExpandable="false"
+      :showSideLabels="false"
       v-model="checkboxSelectedValue"
-    >
-      <template v-slot:label="{ item }">
-        <span class="font-bold">{{ item.label }}</span>
-        <span class="text-grey text-12 ml-4">(2)</span>
-      </template>
-    </AppCheckbox>
+    />
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
+import { defineComponent, ref } from 'vue';
 import { feedBackOptions } from '@/shared/constants';
+import AppCheckbox from './common/appcheckbox/appcheckbox.vue';
 
 export default defineComponent({
   name: 'VoiceFeedback',
-  components: {},
+  components: {
+    AppCheckbox,
+  },
   setup() {
+    const checkboxSelectedValue = ref<number[]>([1]);
     return {
       feedBackOptions,
+      checkboxSelectedValue,
     };
   },
 });
 </script>
 
-<style scoped lang="postcss">
+<style lang="postcss">
 @import '@css/app.css';
+.voice-header {
+  font-size: 24px;
+  text-align: center;
+  padding-top: 20px;
+  font-weight: bold;
+}
+.voice-feedback {
+  .app-checkbox {
+    color: $black-1;
+    &__main {
+      padding-bottom: 24px;
+    }
+    &__base {
+      padding: 20px 0px;
+      margin: 20px;
+      display: flex;
+    }
+    &__description {
+      font-size: 14px;
+    }
+    input {
+      width: 20px;
+      height: 20px;
+      margin-right: 16px;
+    }
+  }
+}
 </style>

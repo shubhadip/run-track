@@ -1,0 +1,152 @@
+@import '@css/app.css';
+
+.btn {
+  font-weight: $btn-font-weight;
+  display: inline-block;
+  color: $body-color;
+  text-align: center;
+  vertical-align: middle;
+  user-select: none;
+  background-color: transparent;
+  border: $btn-border-width solid transparent;
+
+  @mixin button-size $btn-padding-y, $btn-padding-x, $btn-font-size, $btn-line-height, $btn-border-radius;
+
+  transition: $btn-transition;
+
+  @mixin hover {
+    text-decoration: none;
+  }
+
+  &:focus,
+  &.focus {
+    outline: 0;
+    box-shadow: $btn-focus-box-shadow;
+  }
+
+  /* Disabled comes first so active can properly restyle */
+  &.loading,
+  &.disabled,
+  &:disabled {
+    box-shadow: none;
+    pointer-events: none;
+  }
+
+  /* Opinionated: add "hand" cursor to non-disabled .btn elements */
+  &:not(:disabled):not(.disabled) {
+    cursor: pointer;
+  }
+
+  &:not(:disabled):not(.disabled):not(.loading):active,
+  &:not(:disabled):not(.disabled):not(.loading).active {
+    box-shadow: $btn-active-box-shadow;
+
+    &:focus {
+      box-shadow: $btn-focus-box-shadow, $btn-active-box-shadow;
+    }
+  }
+}
+
+/* Future-proof disabling of clicks on `<a>` elements */
+a.btn.disabled {
+  pointer-events: none;
+}
+
+/* Alternate buttons */
+.btn--blue {
+  @mixin button-variant $blue, $blue, $white;
+}
+
+.btn--grey-blue {
+  @mixin button-variant $grey-2, $grey-2, $blue;
+}
+
+.btn--grey {
+  @mixin button-variant $grey-2, $grey-2, $grey;
+}
+
+@each $color, $value in (blue), ($blue) {
+  .btn--outline-$(color) {
+    font-weight: $btn-font-weight-medium;
+
+    @mixin button-outline-variant $value;
+  }
+}
+
+/* Link buttons */
+
+/* Make a button look and behave like a link */
+
+.btn--link {
+  font-weight: $btn-font-weight-medium;
+  color: $link-color;
+
+  @mixin hover {
+    color: $link-hover-color;
+    text-decoration: $link-hover-decoration;
+  }
+
+  &:focus,
+  &.focus {
+    text-decoration: $link-hover-decoration;
+    box-shadow: none;
+  }
+
+  &:disabled,
+  &.disabled {
+    color: $btn-link-disabled-color;
+    pointer-events: none;
+  }
+}
+
+/* Button Sizes */
+
+.btn--lg {
+  @mixin button-size $btn-padding-y-lg, $btn-padding-x-lg, $btn-font-size-lg, $btn-line-height-lg, $btn-border-radius-lg;
+}
+
+.btn--sm {
+  @mixin button-size $btn-padding-y-sm, $btn-padding-x-sm, $btn-font-size-sm, $btn-line-height-sm, $btn-border-radius-sm;
+}
+
+.btn--xs {
+  @mixin button-size $btn-padding-y-xs, $btn-padding-x-xs, $btn-font-size-xs, $btn-line-height-xs, $btn-border-radius-xs;
+}
+
+/* Block button */
+
+.btn--block {
+  display: block;
+  width: 100%;
+}
+
+/* Specificity overrides */
+input[type='submit'],
+input[type='reset'],
+input[type='button'] {
+  &.btn--block {
+    width: 100%;
+  }
+}
+
+/* App spinner overrides w.r.t button sizes */
+.btn--sm,
+.btn--xs {
+  .app-spinner {
+    width: 45px;
+    transform: translate(-25%, 12%) scale(0.5);
+  }
+}
+
+/* order should be this to override loading state */
+.btn {
+  /* Loading state css */
+  &.loading {
+    background-color: $btn-loading-color;
+    border-color: $btn-loading-color;
+  }
+
+  & > .app-spinner {
+    margin: auto;
+  }
+}

@@ -1,0 +1,87 @@
+@define-mixin plain {
+  & {
+    @mixin-content;
+  }
+}
+
+@define-mixin hover {
+  &:hover {
+    @mixin-content;
+  }
+}
+
+@define-mixin focus {
+  &:focus {
+    @mixin-content;
+  }
+}
+
+@define-mixin hover-focus {
+  &:hover,
+  &:focus {
+    @mixin-content;
+  }
+}
+
+/* Useful for <a> plain styling */
+@define-mixin plain-hover-focus {
+  &,
+  &:hover,
+  &:focus {
+    @mixin-content;
+  }
+}
+
+@define-mixin hover-focus-active {
+  &:hover,
+  &:focus,
+  &:active {
+    @mixin-content;
+  }
+}
+
+/*
+  These can be used to generate plain | hover | focus prefixed properties
+  to be used for generating utils.
+  "$use-each-mixin" name is going to be the feeder for this part.
+*/
+@define-mixin each-plain-hover-focus $use-each-mixin {
+  /* Keep space for plain key item */
+  @each $state, $mix in ( , hover\:, focus\:), (plain, hover, focus) {
+    &$(state) {
+      @mixin $(use-each-mixin) $mix {
+        @mixin-content;
+      }
+    }
+  }
+}
+
+@define-mixin each-plain-hover $use-each-mixin {
+  /* Keep space for plain key item */
+  @each $state, $mix in ( , hover\:), (plain, hover) {
+    &$(state) {
+      @mixin $(use-each-mixin) $mix {
+        @mixin-content;
+      }
+    }
+  }
+}
+
+@define-mixin each-plain-focus $use-each-mixin {
+  /* Keep space for plain key item */
+  @each $state, $mix in ( , focus\:), (plain, focus) {
+    &$(state) {
+      @mixin $(use-each-mixin) $mix {
+        @mixin-content;
+      }
+    }
+  }
+}
+
+@define-mixin each-plain $use-each-mixin {
+  & {
+    @mixin $(use-each-mixin) plain {
+      @mixin-content;
+    }
+  }
+}

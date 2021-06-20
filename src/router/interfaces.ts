@@ -9,6 +9,10 @@ export interface IRoute {
 export interface IAllRoutes {
   HOME: IRoute;
   SETTING: IRoute;
-  PREVIOUSWORKOUTS: IRoute;
+  WORKOUTHISTORY: IRoute;
+  WORKOUTPLANS: IRoute;
   INFO: IRoute;
+  LOGIN: IRoute;
+  REGISTER: IRoute;
+  CREATEWORKOUT: IRoute;
 }

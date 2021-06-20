@@ -1,0 +1,104 @@
+/*
+Button variants
+Default styles, as well as :hover, :focus, :active,
+and disabled options for all buttons
+*/
+%button-variant-disabled {
+  opacity: $btn-disabled-opacity;
+  box-shadow: none;
+
+  /* Remove CSS gradients if they're enabled */
+  background-image: none;
+}
+
+@define-mixin button-variant $background, $border, $color, $hover-background: color($background shade(2.5%)),
+  $hover-border: color($border shade(2.5%)), $active-background: color($background shade(5%)),
+  $active-border: color($border shade(5%)) {
+  color: $color;
+  background-color: $background;
+  border-color: $border;
+
+  @mixin hover-focus {
+    background-color: $hover-background;
+    border-color: $hover-border;
+  }
+
+  &:focus,
+  &.focus {
+    /* Avoid using mixin so we can pass custom focus shadow properly */
+  }
+
+  /* Disabled comes first so active can properly restyle */
+  &.disabled,
+  &:disabled {
+    @extend %button-variant-disabled;
+
+    /* color: color($color a(75%));
+    background-color: color($background a(75%));
+    border-color: color($border a(75%)); */
+
+    /* Remove CSS gradients if they're enabled */
+
+    /* background-image: none; */
+  }
+
+  &:not(:disabled):not(.disabled):not(.loading):active,
+  &:not(:disabled):not(.disabled):not(.loading).active {
+    background-color: $active-background;
+
+    /* Remove the gradient for the pressed/active state */
+    background-image: none;
+    border-color: $active-border;
+
+    &:focus {
+      /* Avoid using mixin so we can pass custom focus shadow properly */
+    }
+  }
+}
+
+@define-mixin button-outline-variant $color, $color-hover: color($color shade(7.5%)),
+  $active-background: color($color a(7.5%)), $active-border: color($color shade(7.5%)) {
+  color: $color;
+  border-color: $color;
+
+  @mixin hover {
+    color: $color-hover;
+    background-color: transparent;
+    border-color: $active-border;
+  }
+
+  &:focus,
+  &.focus {
+    box-shadow: 0 0 0 $btn-focus-width color($color a(25%));
+  }
+
+  &.disabled,
+  &:disabled {
+    @extend %button-variant-disabled;
+
+    /* opacity: $btn-disabled-opacity;
+    color: $color;
+    background-color: transparent;
+    box-shadow: none; */
+  }
+
+  &:not(:disabled):not(.disabled):not(.loading):active,
+  &:not(:disabled):not(.disabled):not(.loading).active {
+    color: $color-hover;
+    background-color: $active-background;
+    border-color: $active-border;
+
+    &:focus {
+      /* Avoid using mixin so we can pass custom focus shadow properly */
+      box-shadow: 0 0 0 $btn-focus-width color($color a(50%));
+    }
+  }
+}
+
+/* Button sizes */
+@define-mixin button-size $padding-y, $padding-x, $font-size, $line-height, $border-radius {
+  padding: $padding-y $padding-x;
+  font-size: $font-size;
+  line-height: $line-height;
+  border-radius: $border-radius;
+}

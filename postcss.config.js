@@ -29,6 +29,8 @@ module.exports = {
         return path.resolve(basedir, id);
       },
     }),
+    require('postcss-each')({}),
+    require('postcss-mixins')({}),
     require('postcss-simple-vars')({}),
     require('postcss-nested')({}),
     require('autoprefixer')({

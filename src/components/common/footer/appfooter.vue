@@ -8,9 +8,9 @@
       <div class="btn-details" @click="handleHome">
         <IconView icon="icon-home" />
       </div>
-      <div class="btn-details"><IconView icon="icon-history" :width="24" /></div>
+      <div class="btn-details" @click="handleHistory"><IconView icon="icon-history" :width="24" /></div>
       <div class="btn-details" @click="handleSetting"><IconView icon="icon-cog" /></div>
-      <div class="btn-details"><IconView icon="icon-flickr" /></div>
+      <div class="btn-details" @click="handleInfo"><IconView icon="icon-flickr" /></div>
     </template>
   </footer>
 </template>
@@ -64,10 +64,30 @@ export default defineComponent({
       });
     };
 
+    /**
+     * emit reset workout event
+     */
+    const handleHistory = (): void => {
+      router.push({
+        name: ROUTES.WORKOUTHISTORY.name,
+      });
+    };
+
+    /**
+     * emit reset workout event
+     */
+    const handleInfo = (): void => {
+      router.push({
+        name: ROUTES.INFO.name,
+      });
+    };
+
     return {
       handleClick,
       handleHome,
       handleSetting,
+      handleHistory,
+      handleInfo,
     };
   },
 });
@@ -85,6 +105,7 @@ export default defineComponent({
   .btn-pause,
   .btn-stop,
   .btn-details {
+    border-top: 1px solid $black-2;
     flex: 1;
     text-align: center;
     padding: 16px;

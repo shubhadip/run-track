@@ -11,14 +11,34 @@ export const ROUTES: IAllRoutes = {
     name: 'setting',
     componentName: 'setting',
   },
-  PREVIOUSWORKOUTS: {
-    path: '/prevworkouts',
-    name: 'prevworkouts',
-    componentName: 'prevworkouts',
+  WORKOUTHISTORY: {
+    path: '/workouthistory',
+    name: 'workouthistory',
+    componentName: 'workouthistory',
+  },
+  WORKOUTPLANS: {
+    path: '/workoutplans',
+    name: 'workoutplans',
+    componentName: 'workoutplans',
   },
   INFO: {
     path: '/info',
     name: 'info',
     componentName: 'info',
+  },
+  LOGIN: {
+    path: '/login',
+    name: 'login',
+    componentName: 'login',
+  },
+  REGISTER: {
+    path: '/register',
+    name: 'register',
+    componentName: 'register',
+  },
+  CREATEWORKOUT: {
+    path: '/createworkout',
+    name: 'createworkout',
+    componentName: 'createworkout',
   },
 };

@@ -1,61 +1,154 @@
 import { ref } from 'vue';
-import { IUseHome } from '@/shared/interface';
+import { IGenericOption, IUseHome, IWorkoutLap } from '@/shared/interface';
+import { getData } from '@/utils/generic';
+import { alertWorkoutUtils } from '@/utils/speak';
+
+/**
+ * alerts when whole workout is about to end
+ */
+const evaluateWorkoutEndAlert = (
+  alertWhenWorkoutIsAboutToEnd: boolean,
+  isCountDown: boolean,
+  totalWorkoutTime: number,
+  timer: number,
+  isHalfTime: number | undefined,
+  alertWhenLapIsAboutToEnd: boolean,
+  currentTime: number,
+  currentLap?: string
+): void => {
+  const { speakMessage } = alertWorkoutUtils();
+
+  if (alertWhenWorkoutIsAboutToEnd && !isCountDown && [10, 20, 30].includes(totalWorkoutTime)) {
+    speakMessage(`${timer} seconds remaning`);
+  }
+
+  /**
+   * half time alert
+   */
+  if (isHalfTime && isHalfTime === totalWorkoutTime) {
+    speakMessage(`Half the time`);
+  }
+
+  /**
+   * alerts when current Lap is about to end
+   */
+  if (
+    alertWhenLapIsAboutToEnd &&
+    !isCountDown &&
+    [currentTime - 10, currentTime - 20, currentTime - 30].includes(currentTime - timer)
+  ) {
+    speakMessage(`${timer} seconds remaning of ${currentLap}`);
+  }
+
+  /**
+   * alerts at regular intervals for 5,10,15 mins .....
+   */
+  if (totalWorkoutTime > 0 && totalWorkoutTime % 300 === 0) {
+    speakMessage(`${totalWorkoutTime / 300} minute completed`);
+  }
+
+  // todo: add km logic
+};
 
 /**
  * utility file for Home.vue
  * @returns
  */
 export function useHome(): IUseHome {
-  const runningPeriods = [60];
-  const speakApi = new SpeechSynthesisUtterance();
+  const runningPeriods = ref<IWorkoutLap[]>([]);
+  const totalWorkoutTime = ref(0);
+  const { speakMessage } = alertWorkoutUtils();
+  /**
+   * default 10 as countdown timer
+   * also this will hold value of lap time
+   */
   const currentTime = ref<number>(10);
-  const workoutStarted = ref<boolean>(false);
-  const workoutComplete = ref<boolean>(false);
+  const currentLap = ref<string>('countdown');
+  /**
+   * this will act as temporary variable to hold current lap timing reduction
+   */
   const timer = ref<number | null>(null);
   const intervalId = ref<number | null>(null);
-  const alertWhenWorkoutIsAboutToEnd = ref<boolean>(true);
+  const workoutStarted = ref<boolean>(false);
+  const workoutComplete = ref<boolean>(false);
 
-  const speakMessage = (msg: string): void => {
-    speakApi.text = msg;
-    window.speechSynthesis.speak(speakApi);
+  // todo: create workout logic without workout plan
+  /**
+   * alert config values
+   */
+  const alertWhenLapIsAboutToEnd = ref<boolean>(false);
+  const alertWhenWorkoutIsAboutToEnd = ref<boolean>(false);
+  const isHalfTime = ref<number>();
+
+  /**
+   * setting up different config variables
+   */
+  const initWorkout = (): void => {
+    const selectedWorkout = getData('selectedWorkout') as IGenericOption;
+    if (selectedWorkout) {
+      totalWorkoutTime.value = Object.values(selectedWorkout)[0].reduce((acc: number, element: IWorkoutLap) => {
+        runningPeriods.value.push({
+          type: element.type,
+          timing: element.timing * 60,
+        });
+        return acc + element.timing * 60;
+      }, 0);
+      isHalfTime.value = totalWorkoutTime.value / 2;
+    }
   };
 
-  const evaluateMessage = (): string => {
-    return runningPeriods.length <= 0 ? `Workout Complete` : `${currentTime.value} seconds Workout Complete`;
-  };
-
-  const alertWhenWorkoutIsAboutToEndMsg = (time: number): void => {
-    speakMessage(`Workout About to Complete ${time} seconds remaning`);
+  /**
+   * lap end or workout complete alert message
+   * @param isCountDown
+   * @returns
+   */
+  const LapOrWorkoutEndAlert = (isCountDown: boolean): void => {
+    let msg = '';
+    if (isCountDown) msg = 'Workout Started';
+    if (runningPeriods.value.length <= 0) msg = `Workout Complete`;
+    // below msg can be used to alert lap end
+    // runningPeriods.value.length <= 0 ? `Workout Complete` : `${currentTime.value / 60} min ${currentLap.value} Complete`;
+    if (msg) {
+      speakMessage(msg);
+    }
   };
 
   const startCountDown = (time: number, isCountDown = false): void => {
     let value = time;
+    if (!workoutStarted.value) {
+      workoutStarted.value = true;
+    }
     intervalId.value = setInterval(() => {
-      if (!workoutStarted.value) {
-        workoutStarted.value = true;
-      }
-
       timer.value = value;
       value -= 1;
 
-      if (
-        alertWhenWorkoutIsAboutToEnd.value &&
-        !isCountDown &&
-        [currentTime.value - 10, currentTime.value - 20, currentTime.value - 30].includes(
-          currentTime.value - timer.value
-        )
-      ) {
-        alertWhenWorkoutIsAboutToEndMsg(timer.value);
+      /**
+       * don't count countdown in timer
+       */
+      if (!isCountDown) {
+        totalWorkoutTime.value -= 1;
       }
 
+      evaluateWorkoutEndAlert(
+        alertWhenWorkoutIsAboutToEnd.value,
+        isCountDown,
+        totalWorkoutTime.value,
+        timer.value,
+        isHalfTime.value,
+        alertWhenLapIsAboutToEnd.value,
+        currentTime.value
+      );
+
       if (value === 0 && intervalId.value) {
-        speakMessage(isCountDown ? 'Workout Started' : evaluateMessage());
+        LapOrWorkoutEndAlert(isCountDown);
         clearInterval(intervalId.value);
-        if (runningPeriods.length > 0) {
-          const nextValue = runningPeriods.shift();
+        if (runningPeriods.value.length > 0) {
+          const nextValue = runningPeriods.value.shift();
           if (nextValue) {
-            currentTime.value = nextValue;
-            startCountDown(nextValue);
+            currentLap.value = nextValue.type;
+            currentTime.value = nextValue.timing;
+            speakMessage(`${nextValue.timing / 60} min ${nextValue.type} started`);
+            startCountDown(nextValue.timing);
           }
         } else {
           workoutComplete.value = true;
@@ -64,11 +157,29 @@ export function useHome(): IUseHome {
     }, 1000);
   };
 
-  const start = (): void => {
-    timer.value = currentTime.value;
-    startCountDown(currentTime.value, true);
+  const nonTimerWorkout = (): void => {
+    workoutStarted.value = true;
+    intervalId.value = setInterval(() => {
+      timer.value = (timer.value || 0) + 1;
+      if (timer.value % 300 === 0) {
+        speakMessage(`${timer.value / 300} minute completed`);
+      }
+    }, 1000);
   };
 
+  /**
+   * start workout
+   */
+  const start = (): void => {
+    initWorkout();
+    timer.value = currentTime.value;
+    startCountDown(timer.value, true);
+    // nonTimerWorkout();
+  };
+
+  /**
+   * reset flags when workout is complete
+   */
   const resetWorkout = (): void => {
     if (intervalId.value) {
       clearInterval(intervalId.value);
@@ -77,13 +188,26 @@ export function useHome(): IUseHome {
     }
   };
 
+  const handleStartWorkout = (): void => {
+    if (workoutComplete.value && workoutStarted.value) {
+      workoutStarted.value = false;
+      workoutComplete.value = false;
+    } else {
+      start();
+    }
+  };
+
   return {
     start,
     currentTime,
     workoutStarted,
-    evaluateMessage,
     workoutComplete,
     timer,
     resetWorkout,
+    handleStartWorkout,
+    nonTimerWorkout,
+    totalWorkoutTime,
+    runningPeriods,
+    currentLap,
   };
 }

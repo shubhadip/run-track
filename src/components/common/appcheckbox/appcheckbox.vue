@@ -35,7 +35,7 @@
           <div class="app-checkbox__right">
             <div class="app-checkbox__sidelabel" v-if="showSideLabels && !isExpandable">{{ item.sideLabel }}</div>
             <button
-              v-if="isExpandable && item.description"
+              v-if="showSideLabels && isExpandable && item.description"
               class="app-checkbox__expander"
               :class="[isExpanded(item) ? 'is-open' : '']"
               @click="toggleExpandItem(item.value)"
