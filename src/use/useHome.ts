@@ -84,6 +84,9 @@ export function useHome(): IUseHome {
    * setting up different config variables
    */
   const initWorkout = (): void => {
+    runningPeriods.value = [];
+    currentTime.value = 10;
+    currentLap.value = 'countdown';
     const selectedWorkout = getData('selectedWorkout') as IGenericOption;
     if (selectedWorkout) {
       totalWorkoutTime.value = Object.values(selectedWorkout)[0].reduce((acc: number, element: IWorkoutLap) => {
@@ -171,6 +174,7 @@ export function useHome(): IUseHome {
    * start workout
    */
   const start = (): void => {
+    runningPeriods.value = [];
     initWorkout();
     timer.value = currentTime.value;
     startCountDown(timer.value, true);
