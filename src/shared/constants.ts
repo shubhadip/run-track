@@ -7,7 +7,7 @@ export const wokoutEmoji: Partial<IWorkOutEmoji> = {
   [WorkoutOptions.Rest]: '🧘',
 };
 
-export const ActivateVoiceFeecback = false;
+export const ActivateVoiceFeecback = true;
 export const feedBackOptions: ICheckboxOption[] = [
   {
     label: 'Half Way Feedback',
