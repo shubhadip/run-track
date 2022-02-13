@@ -57,6 +57,10 @@ a.btn.disabled {
   @mixin button-variant $blue, $blue, $white;
 }
 
+.btn--black {
+  @mixin button-variant $black, $black, $white;
+}
+
 .btn--grey-blue {
   @mixin button-variant $grey-2, $grey-2, $blue;
 }

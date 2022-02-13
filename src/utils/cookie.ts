@@ -10,7 +10,6 @@ export const setCookie = (
   data: any,
   config?: { expires: number; path?: string; domain?: string }
 ): void => {
-  debugger;
   Cookies.set(name, data, {
     expires: config?.expires,
     path: config?.path,

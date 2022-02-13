@@ -5,18 +5,26 @@
     <div class="workout-list" v-if="modifiedWorklist.length">
       <div class="start-label">Select to start :</div>
       <div v-for="(w, index) in modifiedWorklist" :key="index" class="list-item" @click="selectWorkout(w)">
-        <div class="cellindex">{{ w.key }}</div>
-        <div class="cell">{{ w.value }}</div>
-        <div class="cell cell-btn">
-          <appButton title="✔️" class="select-workout" :color="AppButtonColors.TRANSPARENT" />
+        <div class="cell">
+          <div class="cellindex">Workout {{ w.key }}</div>
+          <div v-for="item in w.value" :key="item.name" class="workout-plan-row">
+            <p class="workout-plan-name">{{ item.name }}</p>
+            <p class="workout-plan-time">{{ item.time }} s</p>
+          </div>
         </div>
-        <div class="cell cell-btn">
-          <appButton
-            title="❌"
-            class="select-workout"
-            :color="AppButtonColors.TRANSPARENT"
-            @click.stop="deleteWorkout(w)"
-          />
+
+        <div class="option-btns">
+          <div class="cell cell-btn">
+            <appButton title="Select" class="select-workout" :color="AppButtonColors.BLACK" />
+          </div>
+          <div class="cell cell-btn">
+            <appButton
+              title="Delete"
+              class="select-workout"
+              :color="AppButtonColors.BLUE"
+              @click.stop="deleteWorkout(w)"
+            />
+          </div>
         </div>
       </div>
     </div>
@@ -98,6 +106,7 @@ export default defineComponent({
 <style lang="postcss" scoped>
 @import '@css/app.css';
 .workout-plan {
+  padding-bottom: 100px;
   .header {
     font-size: 24px;
     text-align: center;
@@ -126,30 +135,37 @@ export default defineComponent({
     margin: 10px 0px;
     border-top: 1px solid $black-2;
     .cellindex {
-      border-right: 1px solid $black-2;
-      /* min-width: 30px; */
-      margin: 2px 4px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    .cell-btn {
-      max-width: 30px;
-    }
-    .cell-icon {
-      max-width: 30px;
+      text-align: center;
+      width: 100%;
+      padding: 20px;
+      border-bottom: 1px solid $black-2;
     }
     .cell {
-      padding: 4px;
-      margin: 4px;
       min-height: 80px;
       display: flex;
-      align-items: center;
-      justify-content: center;
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: flex-start;
+      width: 100%;
+      .workout-plan-row {
+        width: 90%;
+        font-weight: 700;
+        font-size: 24px;
+        display: flex;
+        padding: 20px;
+        align-items: center;
+        justify-content: space-between;
+        .workout-plan-name {
+          margin-right: 20px;
+          text-transform: capitalize;
+        }
+        .workout-plan-time {
+        }
+      }
     }
     .list-item {
       display: flex;
-      border-bottom: 1px solid $black-2;
+      flex-direction: column;
       .cellindex {
         min-width: 40px;
         margin: 2px;
@@ -159,8 +175,19 @@ export default defineComponent({
         justify-content: center;
       }
       .cell {
-        flex: 1;
-        text-align: center;
+      }
+    }
+    .option-btns {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
+
+      border-bottom: 1px solid $black-2;
+      .btn {
+        min-width: 130px;
+        margin: 16px;
+        padding: 12px;
       }
     }
   }

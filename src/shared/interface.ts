@@ -24,6 +24,20 @@ export enum WorkoutOptions {
   Running = 'running',
   Walking = 'walking',
   Sprint = 'sprint',
+  HighKnees = 'High Knees',
+  JumpingJacks = 'Jumping Jacks',
+  ButKicks = 'ButKicks',
+  MountainClimbers = 'MountainClimbers',
+  Burpees = 'Burpees',
+  Skipping = 'Skipping',
+  RussianTwist = 'Russian twists',
+  LegRaises = 'Leg raises',
+  HipRaises = 'Hip raises',
+  Flutterkick = 'Flutter kicks',
+  PlankKneesToElbow = 'Plank knees to elbow',
+  ChairSitUp = 'Chair sit ups',
+  SeatedInAndOuts = 'Seated in and outs',
+  Rest = 'Rest',
 }
 
 export interface ILoginSuccess {
@@ -220,6 +234,7 @@ export enum AppButtonColors {
   GREY = 'grey',
   GREYBLUE = 'grey-blue',
   TRANSPARENT = 'transparent',
+  BLACK = 'black',
 }
 
 export enum AppButtonSizes {

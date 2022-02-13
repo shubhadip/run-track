@@ -43,9 +43,10 @@ const evaluateWorkoutEndAlert = (
   /**
    * alerts at regular intervals for 5,10,15 mins .....
    */
-  if (totalWorkoutTime > 0 && totalWorkoutTime % 300 === 0) {
-    speakMessage(`${totalWorkoutTime / 300} minute completed`);
-  }
+  // if (totalWorkoutTime > 0 && totalWorkoutTime % 300 === 0) {
+  //   console.log(totalWorkoutTime)
+  //   speakMessage(`${totalWorkoutTime / 300} minute completed`);
+  // }
 
   // todo: add km logic
 };
@@ -92,9 +93,9 @@ export function useHome(): IUseHome {
       totalWorkoutTime.value = Object.values(selectedWorkout)[0].reduce((acc: number, element: IWorkoutLap) => {
         runningPeriods.value.push({
           type: element.type,
-          timing: element.timing * 60,
+          timing: element.timing,
         });
-        return acc + element.timing * 60;
+        return acc + element.timing;
       }, 0);
       isHalfTime.value = totalWorkoutTime.value / 2;
     }
@@ -122,40 +123,42 @@ export function useHome(): IUseHome {
       workoutStarted.value = true;
     }
     intervalId.value = setInterval(() => {
-      timer.value = value;
       value -= 1;
-
-      /**
-       * don't count countdown in timer
-       */
-      if (!isCountDown) {
-        totalWorkoutTime.value -= 1;
-      }
-
-      evaluateWorkoutEndAlert(
-        alertWhenWorkoutIsAboutToEnd.value,
-        isCountDown,
-        totalWorkoutTime.value,
-        timer.value,
-        isHalfTime.value,
-        alertWhenLapIsAboutToEnd.value,
-        currentTime.value
-      );
-
       if (value === 0 && intervalId.value) {
         LapOrWorkoutEndAlert(isCountDown);
-        clearInterval(intervalId.value);
         if (runningPeriods.value.length > 0) {
           const nextValue = runningPeriods.value.shift();
           if (nextValue) {
+            timer.value = nextValue.timing;
+            clearInterval(intervalId.value);
+            speakMessage(`${nextValue.timing} secs ${nextValue.type} started`);
+            startCountDown(nextValue.timing);
             currentLap.value = nextValue.type;
             currentTime.value = nextValue.timing;
-            speakMessage(`${nextValue.timing / 60} min ${nextValue.type} started`);
-            startCountDown(nextValue.timing);
+          } else {
+            clearInterval(intervalId.value);
           }
         } else {
           workoutComplete.value = true;
         }
+      } else {
+        timer.value = value;
+        /**
+         * don't count countdown in timer
+         */
+        if (!isCountDown) {
+          totalWorkoutTime.value -= 1;
+        }
+
+        evaluateWorkoutEndAlert(
+          alertWhenWorkoutIsAboutToEnd.value,
+          isCountDown,
+          totalWorkoutTime.value,
+          timer.value,
+          isHalfTime.value,
+          alertWhenLapIsAboutToEnd.value,
+          currentTime.value
+        );
       }
     }, 1000);
   };

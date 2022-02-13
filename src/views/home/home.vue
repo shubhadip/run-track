@@ -4,7 +4,12 @@
     <template v-if="!workoutStarted && !workoutComplete">
       <div class="selected" v-if="modifiedWorklist.length">Selected Workout :</div>
       <div v-for="(w, index) in modifiedWorklist" :key="index" class="list-item">
-        {{ w.value }}
+        <div class="cell">
+          <div v-for="item in w.value" :key="item.name" class="workout-plan-row">
+            <p class="workout-plan-name">{{ item.name }}</p>
+            <p class="workout-plan-time">{{ item.time }} s</p>
+          </div>
+        </div>
       </div>
       <div class="extra" @click="routeToCreateWorkout">
         {{ modifiedWorklist.length ? 'Change Workout' : 'Create Workout' }}
@@ -16,23 +21,35 @@
       </div>
     </template>
     <template v-else>
-      <div style="margin:20px">Current Workout</div>
-      <div class="lap-tabs">
-        <div class="timer current">
-          <div class="cell">{{ currentLap === 'countdown' ? 'Countdown' : 'Current Lap' }}</div>
-          <div class="cell value">{{ timer || 0 }} <span class="rem">secs</span></div>
-        </div>
-        <div class="timer total">
-          <div class="cell">
-            Workout Rem
-          </div>
-          <div class="cell value">{{ totalWorkoutTime }} <span class="rem">secs</span></div>
-        </div>
+      <div
+        style="text-align:center; margin: 40px 0px;"
+        @click="
+          workoutStarted = false;
+          workoutComplete = false;
+        "
+        v-if="workoutStarted && workoutComplete"
+      >
+        <appButton title="Workout Complete" class="" :color="AppButtonColors.BLACK" @click="() => {}" />
       </div>
-      <template v-if="remainingWorkoutMsg">
-        <div style="margin:20px">Next Laps :</div>
+      <template v-else>
+        <div class="workout-page-title">
+          {{ currentLap === 'countdown' ? 'Countdown' : currentLap || 'Current Workout' }}
+        </div>
+        <div class="lap-tabs">
+          <div :class="['timer current', currentLap === 'Rest' ? 'green' : '']">
+            <div class="cell value">{{ timer || 0 }}</div>
+          </div>
+        </div>
+      </template>
+      <template v-if="remainingWorkoutMsg.length">
+        <div style="margin:20px">Next :</div>
         <div class="list-item">
-          {{ remainingWorkoutMsg }}
+          <div class="cell">
+            <div v-for="item in remainingWorkoutMsg" :key="item.name" class="workout-plan-row">
+              <p class="workout-plan-name">{{ item.name }}</p>
+              <p class="workout-plan-time">{{ item.time }} s</p>
+            </div>
+          </div>
         </div>
       </template>
     </template>
@@ -47,16 +64,17 @@ import AppHeader from '@/components/common/header/appheader.vue';
 import { useHome } from '@/use/useHome';
 import { getData } from '@/utils/generic';
 import { getFormattedMessage, getFormattedWorkout } from '@/utils/workout';
-import { IGenericOption, IWorkoutLap, IWorkoutList, WorkoutOptions } from '@/shared/interface';
+import { IGenericOption, IWorkoutLap, IWorkoutList, AppButtonColors } from '@/shared/interface';
 import { useRouter } from 'vue-router';
 import { ROUTES } from '@/router/constants';
-import { wokoutEmoji } from '@/shared/constants';
+import AppButton from '@/components/common/appbutton/AppButton.vue';
 
 export default defineComponent({
   name: 'Home',
   components: {
     AppHeader,
     AppFooter,
+    AppButton,
   },
   setup() {
     const router = useRouter();
@@ -97,12 +115,14 @@ export default defineComponent({
     };
 
     const remainingWorkoutMsg = computed((): string => {
-      let temp = '';
+      const temp: any = [];
       runningPeriods.value.forEach((element: IWorkoutLap) => {
-        const emoji = wokoutEmoji[element.type as WorkoutOptions];
-        temp += `${emoji}  ${element.timing / 60}  m , `;
+        temp.push({
+          name: element.type,
+          time: element.timing,
+        });
       });
-      return temp.replace(/,\s*$/, '');
+      return temp;
     });
 
     return {
@@ -120,6 +140,7 @@ export default defineComponent({
       totalWorkoutTime,
       remainingWorkoutMsg,
       currentLap,
+      AppButtonColors,
     };
   },
 });
@@ -128,11 +149,17 @@ export default defineComponent({
 <style scoped lang="postcss">
 @import '@css/app.css';
 .home {
+  .workout-page-title {
+    text-align: center;
+    font-size: 32px;
+    font-weight: bold;
+    margin: 40px 0px;
+  }
   .content-wrapper {
     display: flex;
     align-items: center;
     justify-content: center;
-    height: calc(100vh - 200px);
+    height: calc(100vh - 500px);
     overflow-y: scroll;
     flex-direction: column;
     .start {
@@ -160,6 +187,19 @@ export default defineComponent({
     margin: 10px;
     align-items: center;
     justify-content: center;
+    .cell {
+      width: 100%;
+      .workout-plan-row {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        padding: 20px;
+        .workout-plan-name {
+          text-transform: capitalize;
+        }
+      }
+    }
   }
   .selected {
     margin: 10px;
@@ -185,10 +225,22 @@ export default defineComponent({
       color: $white;
       border-radius: 5px;
       min-width: 150px;
+
+      &.current {
+        width: 320px;
+        height: 320px;
+        border-radius: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      &.green {
+        background: green;
+      }
     }
     .value {
       font-weight: bold;
-      font-size: 30px;
+      font-size: 120px;
     }
     .rem {
       font-size: 12px;

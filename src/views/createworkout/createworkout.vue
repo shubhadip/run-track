@@ -1,13 +1,13 @@
 <template>
   <div class="createworkout">
     <app-header />
-    <div class="header">Create Workout</div>
+    <div class="header">Add exercise</div>
     <div class="content">
       <app-single-select
         v-model="singleSelectValue"
         :items="singleSelectItems"
-        placeholder="Select Workout Type"
-        label="Select Workout Type"
+        placeholder="Select Workout Type / Rest"
+        label="Select Workout Type / Rest"
         :mobileMode="false"
         :autoValidate="true"
         id="input1"
@@ -15,8 +15,8 @@
       />
       <app-numeric-input
         id="test-input3"
-        placeholder="Enter Workout Time (mins)"
-        label="Workout Time (mins)"
+        placeholder="Enter Workout Time (secs)"
+        label="Workout Time (secs)"
         v-model="workoutTimeValue"
         addon=""
         inputType="tel"
@@ -26,8 +26,7 @@
         class="workout-time"
       />
       <div class="workout-wrapper">
-        <appButton title="Add Laps" class="add-workout" :color="AppButtonColors.BLUE" @click="addWorkout" />
-        <appButton title="Done" class="create-workout" :color="AppButtonColors.GREY" @click="createWorkout" />
+        <appButton title="Add" class="add-workout" :color="AppButtonColors.BLUE" @click="addWorkout" />
       </div>
     </div>
     <label style="margin: 14px;" v-if="workoutLaps.length"> Total Time : {{ totalWorkoutTime }} </label>
@@ -37,10 +36,17 @@
         <div class="cell">Time</div>
       </div>
       <div v-for="(w, index) in workoutLaps" :key="index" class="list-item">
-        <div class="cell">{{ wokoutEmoji[w.type] }}</div>
-        <div class="cell">{{ w.timing }} mins</div>
+        <div class="cell">{{ wokoutEmoji[w.type] || w.type }}</div>
+        <div class="cell">{{ w.timing }} secs</div>
       </div>
     </div>
+    <appButton
+      v-if="workoutLaps.length"
+      title="Create Workout"
+      class="create-workout"
+      :color="AppButtonColors.BLACK"
+      @click="createWorkout"
+    />
     <app-footer />
   </div>
 </template>
@@ -57,7 +63,7 @@ import { notify } from '@kyvg/vue3-notification';
 import { getData, setData } from '@/utils/generic';
 import { useRouter } from 'vue-router';
 import { ROUTES } from '@/router/constants';
-import { wokoutEmoji } from '@/shared/constants';
+import { wokoutEmoji, workoutList } from '@/shared/constants';
 
 export default defineComponent({
   name: 'CreateWorkout',
@@ -73,20 +79,7 @@ export default defineComponent({
     const singleSelectValue = ref<string>('');
     const workoutTimeValue = ref<number>();
     const workoutLaps: Ref<IWorkoutLap[]> = ref<IWorkoutLap[]>([]);
-    const singleSelectItems: ISingleSelectOption[] = [
-      {
-        label: `${wokoutEmoji[WorkoutOptions.Running]} Run`,
-        value: WorkoutOptions.Running,
-      },
-      {
-        label: `${wokoutEmoji[WorkoutOptions.Sprint]} Sprint `,
-        value: WorkoutOptions.Sprint,
-      },
-      {
-        label: `${wokoutEmoji[WorkoutOptions.Walking]} Walk `,
-        value: WorkoutOptions.Walking,
-      },
-    ];
+    const singleSelectItems: ISingleSelectOption[] = workoutList;
 
     /**
      * keeps user input in array
@@ -98,6 +91,8 @@ export default defineComponent({
           type: singleSelectValue.value,
           timing,
         });
+        workoutTimeValue.value = 0;
+        singleSelectValue.value = '';
       } else {
         notify({
           title: 'Add workout type & timing',
@@ -177,6 +172,9 @@ export default defineComponent({
   .create-workout {
     margin-top: 20px;
     min-width: 130px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
   .workout-wrapper {
     display: flex;

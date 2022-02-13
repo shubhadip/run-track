@@ -4,6 +4,7 @@
     <div class="user-details" v-if="false">Workout Plans</div>
     <div class="main-menu">
       <ul>
+        <li @click="routeToHome">Home</li>
         <li @click="routeToCreateworkout">Create Workout</li>
         <li @click="routeToPlans">Workout Plans</li>
         <!-- <li @click="routeToLogin">Login</li> -->
@@ -47,7 +48,7 @@ export default defineComponent({
     };
 
     /**
-     * open login page
+     * open workout plan page
      */
     const routeToPlans = (): void => {
       router.push({
@@ -57,7 +58,7 @@ export default defineComponent({
     };
 
     /**
-     * open login page
+     * open create workout page
      */
     const routeToCreateworkout = (): void => {
       router.push({
@@ -66,11 +67,21 @@ export default defineComponent({
       onClickOutside();
     };
 
+    /**
+     * open Home
+     */
+    const routeToHome = (): void => {
+      router.push({
+        name: ROUTES.HOME.name,
+      });
+      onClickOutside();
+    };
     return {
       onClickOutside,
       routeToLogin,
       routeToPlans,
       routeToCreateworkout,
+      routeToHome,
     };
   },
 });
