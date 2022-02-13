@@ -1,8 +1,8 @@
 <template>
   <footer class="footer">
     <template v-if="$props.workoutStarted && !$props.workoutComplete">
-      <div class="btn-pause">Pause</div>
-      <div class="btn-stop" @click="handleClick">Stop</div>
+      <!-- <div class="btn-pause">Pause</div> -->
+      <div class="btn-stop" @click="handleClick">Close Workout</div>
     </template>
     <template v-else>
       <div class="btn-details" @click="handleHome">

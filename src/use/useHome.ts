@@ -192,6 +192,9 @@ export function useHome(): IUseHome {
       clearInterval(intervalId.value);
       workoutComplete.value = false;
       workoutStarted.value = false;
+      currentLap.value = 'countdown';
+      currentTime.value = 10;
+      runningPeriods.value = [];
     }
   };
 
