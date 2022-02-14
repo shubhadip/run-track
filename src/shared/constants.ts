@@ -56,11 +56,11 @@ const getSortedWorkOutList = (): any => {
     },
     {
       label: 'Plank',
-      value: WorkoutOptions.HighKnees,
+      value: WorkoutOptions.Plank,
     },
     {
       label: 'Boat Hold',
-      value: WorkoutOptions.HighKnees,
+      value: WorkoutOptions.BoatHold,
     },
     {
       label: 'High Knees',
@@ -119,7 +119,7 @@ const getSortedWorkOutList = (): any => {
       value: WorkoutOptions.Crunches,
     },
     {
-      label: 'Crunches',
+      label: 'Star Crunch',
       value: WorkoutOptions.StarCrunch,
     },
   ].sort((x: any, y: any) => {
