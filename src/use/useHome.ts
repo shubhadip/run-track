@@ -1,4 +1,4 @@
-import { ref } from 'vue';
+import { onUnmounted, ref } from 'vue';
 import { IGenericOption, IUseHome, IWorkoutLap } from '@/shared/interface';
 import { getData } from '@/utils/generic';
 import { alertWorkoutUtils } from '@/utils/speak';
@@ -131,7 +131,7 @@ export function useHome(): IUseHome {
           if (nextValue) {
             timer.value = nextValue.timing;
             clearInterval(intervalId.value);
-            speakMessage(`${nextValue.timing} secs ${nextValue.type} started`);
+            speakMessage(`${nextValue.timing} seconds ${nextValue.type} started`);
             startCountDown(nextValue.timing);
             currentLap.value = nextValue.type;
             currentTime.value = nextValue.timing;
@@ -178,6 +178,7 @@ export function useHome(): IUseHome {
    */
   const start = (): void => {
     runningPeriods.value = [];
+    timer.value = null;
     initWorkout();
     timer.value = currentTime.value;
     startCountDown(timer.value, true);
@@ -206,6 +207,12 @@ export function useHome(): IUseHome {
       start();
     }
   };
+
+  onUnmounted(() => {
+    if (intervalId.value) {
+      clearInterval(intervalId.value);
+    }
+  });
 
   return {
     start,

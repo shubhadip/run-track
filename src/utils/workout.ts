@@ -28,7 +28,7 @@ export const getFormattedMessage = (workoutComplete: boolean, workoutStarted: bo
     return 'WORKOUT COMPLETED';
   }
   if (workoutStarted && !workoutComplete && timer) {
-    return `${timer} secs remaining`;
+    return `${timer} seconds remaining`;
   }
   return 'Start';
 };

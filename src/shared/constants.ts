@@ -1,4 +1,4 @@
-import { WorkoutOptions, ICheckboxOption, IWorkOutEmoji } from './interface';
+import { WorkoutOptions, ICheckboxOption, IWorkOutEmoji, ISingleSelectOption } from './interface';
 
 export const wokoutEmoji: Partial<IWorkOutEmoji> = {
   [WorkoutOptions.Running]: '🏃🏻',
@@ -36,73 +36,95 @@ export const feedBackOptions: ICheckboxOption[] = [
   // },
 ];
 
-export const workoutList = [
-  {
-    label: `${wokoutEmoji[WorkoutOptions.Rest]}  Rest`,
-    value: WorkoutOptions.Rest,
-  },
-  {
-    label: `${wokoutEmoji[WorkoutOptions.Running]} Run`,
-    value: WorkoutOptions.Running,
-  },
-  {
-    label: `${wokoutEmoji[WorkoutOptions.Sprint]} Sprint `,
-    value: WorkoutOptions.Sprint,
-  },
-  {
-    label: `${wokoutEmoji[WorkoutOptions.Walking]} Walk `,
-    value: WorkoutOptions.Walking,
-  },
-  {
-    label: 'High Knees',
-    value: WorkoutOptions.HighKnees,
-  },
-  {
-    label: 'Jumping Jacks',
-    value: WorkoutOptions.JumpingJacks,
-  },
-  {
-    label: 'ButKicks',
-    value: WorkoutOptions.ButKicks,
-  },
-  {
-    label: 'MountainClimbers',
-    value: WorkoutOptions.MountainClimbers,
-  },
-  {
-    label: 'Burpees',
-    value: WorkoutOptions.Burpees,
-  },
-  {
-    label: 'Skipping',
-    value: WorkoutOptions.Skipping,
-  },
-  {
-    label: 'Russian twists',
-    value: WorkoutOptions.RussianTwist,
-  },
-  {
-    label: 'Leg raises',
-    value: WorkoutOptions.LegRaises,
-  },
-  {
-    label: 'Hip raises',
-    value: WorkoutOptions.HipRaises,
-  },
-  {
-    label: 'Flutter kicks',
-    value: WorkoutOptions.Flutterkick,
-  },
-  {
-    label: 'Plank knees to elbow',
-    value: WorkoutOptions.PlankKneesToElbow,
-  },
-  {
-    label: 'Chair sit ups',
-    value: WorkoutOptions.ChairSitUp,
-  },
-  {
-    label: 'Seated in and outs',
-    value: WorkoutOptions.SeatedInAndOuts,
-  },
-];
+const getSortedWorkOutList = (): any => {
+  return [
+    {
+      label: `${wokoutEmoji[WorkoutOptions.Rest]}  Rest`,
+      value: WorkoutOptions.Rest,
+    },
+    {
+      label: `${wokoutEmoji[WorkoutOptions.Running]} Run`,
+      value: WorkoutOptions.Running,
+    },
+    {
+      label: `${wokoutEmoji[WorkoutOptions.Sprint]} Sprint `,
+      value: WorkoutOptions.Sprint,
+    },
+    {
+      label: `${wokoutEmoji[WorkoutOptions.Walking]} Walk `,
+      value: WorkoutOptions.Walking,
+    },
+    {
+      label: 'Plank',
+      value: WorkoutOptions.HighKnees,
+    },
+    {
+      label: 'Boat Hold',
+      value: WorkoutOptions.HighKnees,
+    },
+    {
+      label: 'High Knees',
+      value: WorkoutOptions.HighKnees,
+    },
+    {
+      label: 'Jumping Jacks',
+      value: WorkoutOptions.JumpingJacks,
+    },
+    {
+      label: 'ButKicks',
+      value: WorkoutOptions.ButKicks,
+    },
+    {
+      label: 'MountainClimbers',
+      value: WorkoutOptions.MountainClimbers,
+    },
+    {
+      label: 'Burpees',
+      value: WorkoutOptions.Burpees,
+    },
+    {
+      label: 'Skipping',
+      value: WorkoutOptions.Skipping,
+    },
+    {
+      label: 'Russian twists',
+      value: WorkoutOptions.RussianTwist,
+    },
+    {
+      label: 'Leg raises',
+      value: WorkoutOptions.LegRaises,
+    },
+    {
+      label: 'Hip raises',
+      value: WorkoutOptions.HipRaises,
+    },
+    {
+      label: 'Flutter kicks',
+      value: WorkoutOptions.Flutterkick,
+    },
+    {
+      label: 'Plank knees to elbow',
+      value: WorkoutOptions.PlankKneesToElbow,
+    },
+    {
+      label: 'Chair sit ups',
+      value: WorkoutOptions.ChairSitUp,
+    },
+    {
+      label: 'Seated in and outs',
+      value: WorkoutOptions.SeatedInAndOuts,
+    },
+    {
+      label: 'Crunches',
+      value: WorkoutOptions.Crunches,
+    },
+    {
+      label: 'Crunches',
+      value: WorkoutOptions.StarCrunch,
+    },
+  ].sort((x: any, y: any) => {
+    // eslint-disable-next-line
+    return x.label > y.label ? 1 : (x.label < y.label ? -1 : 0)
+  });
+};
+export const workoutList: ISingleSelectOption[] = getSortedWorkOutList();

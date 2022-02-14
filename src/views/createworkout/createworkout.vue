@@ -156,6 +156,8 @@ export default defineComponent({
 <style lang="postcss" scoped>
 @import '@css/app.css';
 .createworkout {
+  overflow-y: scroll;
+  padding-bottom: 100px;
   .header {
     font-size: 24px;
     text-align: center;

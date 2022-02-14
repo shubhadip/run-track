@@ -1,24 +1,6 @@
 const IN_PRODUCTION = process.env.NODE_ENV === 'production';
 const path = require('path');
 
-const purgecss = {
-  '@fullhuman/postcss-purgecss': {
-    content: ['./src/**/*.vue', './src/App.vue'],
-    defaultExtractor(content) {
-      const contentWithoutStyleBlocks = content.replace(/<style[^]+?<\/style>/gi, '');
-      return contentWithoutStyleBlocks.match(/[A-Za-z0-9-_/:]*[A-Za-z0-9-_/]+/g) || [];
-    },
-    safelist: [
-      /-(leave|enter|appear)(|-(to|from|active))$/,
-      /^(?!(|.*?:)cursor-move).+-move$/,
-      /^router-link(|-exact)-active$/,
-      'html',
-      'body',
-      /data-v-.*/,
-    ],
-  },
-};
-
 module.exports = {
   plugins: [
     require('postcss-import')({
@@ -38,7 +20,7 @@ module.exports = {
     }),
     IN_PRODUCTION &&
       require('@fullhuman/postcss-purgecss')({
-        content: [`./public/**/*.html`, `./src/**/*.vue`],
+        content: [`./public/**/*.html`, `./src/**/*.vue`, `./src/**/*.ts`],
         defaultExtractor(content) {
           const contentWithoutStyleBlocks = content.replace(/<style[^]+?<\/style>/gi, '');
           return contentWithoutStyleBlocks.match(/[A-Za-z0-9-_/:]*[A-Za-z0-9-_/]+/g) || [];

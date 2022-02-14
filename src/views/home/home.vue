@@ -2,15 +2,20 @@
   <div class="container-fluid home">
     <app-header />
     <template v-if="!workoutStarted && !workoutComplete">
-      <div class="selected" v-if="modifiedWorklist.length">Selected Workout :</div>
-      <div v-for="(w, index) in modifiedWorklist" :key="index" class="list-item">
-        <div class="cell">
-          <div v-for="item in w.value" :key="item.name" class="workout-plan-row">
-            <p class="workout-plan-name">{{ item.name }}</p>
-            <p class="workout-plan-time">{{ item.time }} s</p>
+      <div class="selected" v-if="modifiedWorklist.length" @click="showExpandedWorkout = !showExpandedWorkout">
+        <p>Selected Workout :</p>
+        <img :src="require('./../../assets/icons/chevron-down.svg')" style="border: 0px" />
+      </div>
+      <template v-if="showExpandedWorkout">
+        <div v-for="(w, index) in modifiedWorklist" :key="index" class="list-item">
+          <div class="cell">
+            <div v-for="item in w.value" :key="item.name" class="workout-plan-row">
+              <p class="workout-plan-name">{{ item.name }}</p>
+              <p class="workout-plan-time">{{ item.time }} s</p>
+            </div>
           </div>
         </div>
-      </div>
+      </template>
       <div class="extra" @click="routeToCreateWorkout">
         {{ modifiedWorklist.length ? 'Change Workout' : 'Create Workout' }}
       </div>
@@ -36,7 +41,9 @@
           {{ currentLap === 'countdown' ? 'Countdown' : currentLap || 'Current Workout' }}
         </div>
         <div class="lap-tabs">
-          <div :class="['timer current', currentLap === 'Rest' ? 'green' : '']">
+          <div
+            :class="['timer current', currentLap === 'Rest' ? 'green' : '', currentLap === 'countdown' ? 'orange' : '']"
+          >
             <div class="cell value">{{ timer || 0 }}</div>
           </div>
         </div>
@@ -79,6 +86,7 @@ export default defineComponent({
   setup() {
     const router = useRouter();
     const modifiedWorklist: Ref<IWorkoutList[] | null> = ref<IWorkoutList[] | null>([]);
+    const showExpandedWorkout = ref<boolean>(false);
     const {
       totalWorkoutTime,
       start,
@@ -141,6 +149,7 @@ export default defineComponent({
       remainingWorkoutMsg,
       currentLap,
       AppButtonColors,
+      showExpandedWorkout,
     };
   },
 });
@@ -149,6 +158,7 @@ export default defineComponent({
 <style scoped lang="postcss">
 @import '@css/app.css';
 .home {
+  padding-bottom: 100px;
   .workout-page-title {
     text-align: center;
     font-size: 32px;
@@ -184,9 +194,10 @@ export default defineComponent({
   .list-item {
     display: flex;
     border: 1px solid $black-2;
-    margin: 10px;
+    margin: 0px 10px 10px 10px;
     align-items: center;
     justify-content: center;
+    border-top: 0px;
     .cell {
       width: 100%;
       .workout-plan-row {
@@ -194,7 +205,7 @@ export default defineComponent({
         flex-direction: row;
         align-items: center;
         justify-content: space-between;
-        padding: 20px;
+        padding: 10px 20px;
         .workout-plan-name {
           text-transform: capitalize;
         }
@@ -202,7 +213,13 @@ export default defineComponent({
     }
   }
   .selected {
-    margin: 10px;
+    margin: 10px 10px 0px 10px;
+    display: flex;
+    justify-content: space-between;
+    font-weight: bold;
+    font-size: 24px;
+    border: 1px solid $black-2;
+    padding: 10px 20px;
   }
   .extra {
     padding: 10px;
@@ -236,6 +253,9 @@ export default defineComponent({
       }
       &.green {
         background: green;
+      }
+      &.orange {
+        background: orange;
       }
     }
     .value {

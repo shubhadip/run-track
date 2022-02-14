@@ -38,6 +38,10 @@ export enum WorkoutOptions {
   ChairSitUp = 'Chair sit ups',
   SeatedInAndOuts = 'Seated in and outs',
   Rest = 'Rest',
+  Plank = 'Plank',
+  BoatHold = 'Boat hold',
+  Crunches = 'Crunches',
+  StarCrunch = 'Star Crunches',
 }
 
 export interface ILoginSuccess {
