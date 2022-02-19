@@ -55,6 +55,18 @@ const getSortedWorkOutList = (): any => {
       value: WorkoutOptions.Walking,
     },
     {
+      label: `Dead Hang`,
+      value: WorkoutOptions.DeadHang,
+    },
+    {
+      label: `Scapulla Pull`,
+      value: WorkoutOptions.ScapullaPull,
+    },
+    {
+      label: `Negative Pull `,
+      value: WorkoutOptions.NegativePull,
+    },
+    {
       label: 'Plank',
       value: WorkoutOptions.Plank,
     },
@@ -71,7 +83,7 @@ const getSortedWorkOutList = (): any => {
       value: WorkoutOptions.JumpingJacks,
     },
     {
-      label: 'ButKicks',
+      label: 'Butt Kicks',
       value: WorkoutOptions.ButKicks,
     },
     {

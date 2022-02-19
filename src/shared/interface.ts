@@ -26,7 +26,7 @@ export enum WorkoutOptions {
   Sprint = 'sprint',
   HighKnees = 'High Knees',
   JumpingJacks = 'Jumping Jacks',
-  ButKicks = 'ButKicks',
+  ButKicks = 'Butt Kicks',
   MountainClimbers = 'MountainClimbers',
   Burpees = 'Burpees',
   Skipping = 'Skipping',
@@ -42,6 +42,9 @@ export enum WorkoutOptions {
   BoatHold = 'Boat hold',
   Crunches = 'Crunches',
   StarCrunch = 'Star Crunches',
+  DeadHang = 'Dead Hang',
+  ScapullaPull = 'Scapulla Pull',
+  NegativePull = 'Negative Pull',
 }
 
 export interface ILoginSuccess {

@@ -122,45 +122,50 @@ export function useHome(): IUseHome {
     if (!workoutStarted.value) {
       workoutStarted.value = true;
     }
-    intervalId.value = setInterval(() => {
-      value -= 1;
-      if (value === 0 && intervalId.value) {
-        LapOrWorkoutEndAlert(isCountDown);
-        if (runningPeriods.value.length > 0) {
-          const nextValue = runningPeriods.value.shift();
-          if (nextValue) {
-            timer.value = nextValue.timing;
-            clearInterval(intervalId.value);
-            speakMessage(`${nextValue.timing} seconds ${nextValue.type} started`);
-            startCountDown(nextValue.timing);
-            currentLap.value = nextValue.type;
-            currentTime.value = nextValue.timing;
+    intervalId.value = setInterval(
+      () => {
+        value -= 1;
+        if (value <= 0 && intervalId.value) {
+          LapOrWorkoutEndAlert(isCountDown);
+          if (runningPeriods.value.length > 0) {
+            const nextValue = runningPeriods.value.shift();
+            if (nextValue) {
+              timer.value = nextValue.timing;
+              clearInterval(intervalId.value);
+              speakMessage(`${nextValue.timing} seconds ${nextValue.type} started`);
+              startCountDown(nextValue.timing);
+              currentLap.value = nextValue.type;
+              currentTime.value = nextValue.timing;
+            } else {
+              clearInterval(intervalId.value);
+            }
           } else {
+            workoutComplete.value = true;
             clearInterval(intervalId.value);
           }
         } else {
-          workoutComplete.value = true;
-        }
-      } else {
-        timer.value = value;
-        /**
-         * don't count countdown in timer
-         */
-        if (!isCountDown) {
-          totalWorkoutTime.value -= 1;
-        }
+          timer.value = value;
+          /**
+           * don't count countdown in timer
+           */
+          if (!isCountDown) {
+            totalWorkoutTime.value -= 1;
+          }
 
-        evaluateWorkoutEndAlert(
-          alertWhenWorkoutIsAboutToEnd.value,
-          isCountDown,
-          totalWorkoutTime.value,
-          timer.value,
-          isHalfTime.value,
-          alertWhenLapIsAboutToEnd.value,
-          currentTime.value
-        );
-      }
-    }, 1000);
+          evaluateWorkoutEndAlert(
+            alertWhenWorkoutIsAboutToEnd.value,
+            isCountDown,
+            totalWorkoutTime.value,
+            timer.value,
+            isHalfTime.value,
+            alertWhenLapIsAboutToEnd.value,
+            currentTime.value
+          );
+        }
+      },
+      1000,
+      value
+    );
   };
 
   const nonTimerWorkout = (): void => {
