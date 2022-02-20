@@ -199,6 +199,7 @@ export default defineComponent({
     justify-content: center;
     border-top: 0px;
     .cell {
+      border-top: 1px solid black;
       width: 100%;
       .workout-plan-row {
         display: flex;
