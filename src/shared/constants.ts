@@ -134,6 +134,50 @@ const getSortedWorkOutList = (): any => {
       label: 'Star Crunch',
       value: WorkoutOptions.StarCrunch,
     },
+    {
+      label: 'Running Jump',
+      value: WorkoutOptions.RunningJump,
+    },
+    {
+      label: 'A Skips',
+      value: WorkoutOptions.ASkips,
+    },
+    {
+      label: 'Run Toe Touch',
+      value: WorkoutOptions.RunToeTouch,
+    },
+    {
+      label: 'Leg Raise Clap',
+      value: WorkoutOptions.LegRaiseClap,
+    },
+    {
+      label: 'On Air Lunges',
+      value: WorkoutOptions.OnAirLunges,
+    },
+    {
+      label: 'SquatJump',
+      value: WorkoutOptions.SquatJump,
+    },
+    {
+      label: 'Ankle Walk',
+      value: WorkoutOptions.AnkleWalk,
+    },
+    {
+      label: 'Single Leg Jump',
+      value: WorkoutOptions.SingleLegJump,
+    },
+    {
+      label: 'Knee Hold',
+      value: WorkoutOptions.KneeHold,
+    },
+    {
+      label: 'Box Jump',
+      value: WorkoutOptions.BoxJump,
+    },
+    {
+      label: 'Straight leg Running',
+      value: WorkoutOptions.StraightLegRunning,
+    },
   ].sort((x: any, y: any) => {
     // eslint-disable-next-line
     return x.label > y.label ? 1 : (x.label < y.label ? -1 : 0)

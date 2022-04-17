@@ -45,6 +45,17 @@ export enum WorkoutOptions {
   DeadHang = 'Dead Hang',
   ScapullaPull = 'Scapulla Pull',
   NegativePull = 'Negative Pull',
+  RunningJump = 'Running Jump',
+  ASkips = 'A Skips',
+  RunToeTouch = 'Run Toe Touch',
+  LegRaiseClap = 'Leg Raise Clap',
+  OnAirLunges = 'On Air Lunges',
+  SquatJump = 'Squat Jump',
+  AnkleWalk = 'AnkleWalk',
+  SingleLegJump = 'Single Leg Jump',
+  KneeHold = 'Knee Hold',
+  StraightLegRunning = 'Straight Leg Run',
+  BoxJump = 'Box Jump',
 }
 
 export interface ILoginSuccess {
