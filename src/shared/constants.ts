@@ -178,6 +178,10 @@ const getSortedWorkOutList = (): any => {
       label: 'Straight leg Running',
       value: WorkoutOptions.StraightLegRunning,
     },
+    {
+      label: 'Jump ',
+      value: WorkoutOptions.Jump,
+    },
   ].sort((x: any, y: any) => {
     // eslint-disable-next-line
     return x.label > y.label ? 1 : (x.label < y.label ? -1 : 0)

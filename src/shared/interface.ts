@@ -56,6 +56,7 @@ export enum WorkoutOptions {
   KneeHold = 'Knee Hold',
   StraightLegRunning = 'Straight Leg Run',
   BoxJump = 'Box Jump',
+  Jump = 'Jump',
 }
 
 export interface ILoginSuccess {
