@@ -1,0 +1,182 @@
+@import '@css/_app-partials.css';
+
+.app-dialog {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  z-index: $modal-z-index;
+  display: flex;
+
+  &__content {
+    position: relative;
+    background: $modal-background-color;
+    margin: auto;
+    padding: 16px;
+    border-radius: $modal-border-radius;
+  }
+
+  &__buttons {
+    display: flex;
+    align-items: center;
+    line-height: 0px;
+  }
+
+  &__close {
+    margin-left: auto;
+    font-size: 24px;
+    z-index: 1;
+    cursor: pointer;
+    position: relative;
+  }
+
+  /* Backdrop */
+
+  &--backdrop {
+    background: $modal-overlay-color;
+  }
+
+  /* Variants */
+
+  &--center {
+    padding: 20px;
+    overflow-y: auto;
+
+    .app-dialog__content {
+      width: 100%;
+      max-width: $modal-content-max-width;
+    }
+  }
+
+  &--fullscreen {
+    .app-dialog__content {
+      width: 100%;
+      height: 100%;
+      border-radius: 0;
+      overflow-y: auto;
+    }
+  }
+
+  &--mobile-bottom-auto {
+    .app-dialog__content {
+      width: 100%;
+      max-height: 92%;
+      border-radius: $modal-border-radius $modal-border-radius 0 0;
+      margin: auto 0 0;
+      overflow-y: auto;
+    }
+  }
+
+  &--mobile-bottom-max {
+    .app-dialog__content {
+      width: 100%;
+      height: 92%;
+      border-radius: $modal-border-radius $modal-border-radius 0 0;
+      margin: auto 0 0;
+      overflow-y: auto;
+    }
+  }
+
+  &--desktop-right {
+    .app-dialog__content {
+      width: 480px;
+      height: 100%;
+      border-radius: 0;
+      margin: 0 0 0 auto;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .app-dialog__buttons {
+      height: rem(72px);
+      border-bottom: 1px solid $grey-2;
+      padding: rem(16px 32px);
+
+      /* Flex shrink 0 required important */
+      flex-shrink: 0;
+    }
+
+    .app-dialog__close {
+      order: -1;
+      margin-right: auto;
+      margin-left: 0;
+    }
+
+    .app-dialog__body {
+      min-height: 0;
+      overflow-y: auto;
+      padding: rem(24px 32px);
+      flex-grow: 1;
+    }
+  }
+
+  /* scroll freeze setting for modals */
+  &.scroll-freeze {
+    &,
+    & > *,
+    & > * > * {
+      overflow: hidden !important;
+
+      @mixin scroll-freeze;
+    }
+  }
+}
+
+
+.fade-enter-active {
+  animation: fade-in 0.25s ease-out;
+}
+
+.slide-enter-active {
+  animation: fade-in 0.3s ease-out;
+  & > * {
+    opacity: 0;
+    animation: 0.2s ease 0.1s slide-left;
+  }
+}
+
+.pop-enter-active {
+  animation: fade-in 0.3s ease-out;
+  & > * {
+    opacity: 0;
+    animation: 0.2s ease 0.1s slide-up;
+  }
+}
+
+@keyframes slide-left {
+  0% {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slide-up {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fade-in {
+  0% {
+    opacity: 0.5;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 1;
+  }
+}
